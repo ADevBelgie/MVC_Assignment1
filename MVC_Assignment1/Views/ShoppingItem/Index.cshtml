@@ -1,0 +1,42 @@
+﻿@model IEnumerable<MVC_Assignment1.Models.ShoppingItemViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Hier is uw Shopping Cart</h1>
+
+<p>
+    <a asp-action="Index" asp-controller="Home">Add more items</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.productID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.productID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |*@
+                <a asp-action="Details" asp-route-id="@item.productID" asp-controller="ProductTShirtt">Details</a> |
+                <a asp-action="RemoveProductToCart" asp-route-id="@item.productID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
