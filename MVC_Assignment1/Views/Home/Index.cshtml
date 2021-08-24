@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<MVC_Assignment1.Models.ProductTShirtViewModel>
 @{
     ViewData["Title"] = "Home Page";
- var productsEnum = (IEnumerable<ProductTShirtViewModel>)Model;
- var productsList = productsEnum.ToList();
- int recordsPerPage = 3;
- int carouselPages = (productsList.Count() + recordsPerPage - 1) / recordsPerPage;
- //var products = (List<ProductTShirtViewModel>)ViewBag.Products;
+    var productsEnum = (IEnumerable<ProductTShirtViewModel>)Model;
+    var productsList = productsEnum.ToList();
+
+    int recordsPerRow = 3;
+    int amountOfRows = 3;
+    //var products = (List<ProductTShirtViewModel>)ViewBag.Products;
 }
 
 <div class="sub-header">
@@ -35,55 +36,57 @@
         </div>
     </div>
 </div>
+
 <div class="container">
-
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
-
-        <!--Wrapper for carousel items -->
-
-        <div class="carousel-inner">
-            @for (int y = 0; y < carouselPages; y++)
+    <nav id="pagenav">
+        <ul class="pagination justify-content-center p-3">
+            <li class="page-item @(ViewBag.PageId == 1? "disabled":"")">
+                <a class="page-link" asp-action="Index" asp-route-id="@(ViewBag.PageId-1)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" asp-action="Index" asp-route-id="1">1</a></li>
+            <li class="page-item"><a class="page-link" asp-action="Index" asp-route-id="2">2</a></li>
+            <li class="page-item"><a class="page-link" asp-action="Index" asp-route-id="3">3</a></li>
+            <li class="page-item @(ViewBag.PageId == ViewBag.TotalPages? "disabled":"")">
+                <a class="page-link" asp-action="Index" asp-route-id="@(ViewBag.PageId+1)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    @for (int y = 0; y < amountOfRows; y++)
+    {
+        <div class="row">
+            @for (int i = (y * recordsPerRow); i < (y * recordsPerRow) + recordsPerRow; i++)
             {
-                string state = y == 0 ? "active" : "";
+                var product = productsList.ElementAtOrDefault(i);
+                if (product != null)
+                {
+                    <div class="col-sm-4">
+                        <div class="text-center">
 
+                            <div class="img-thumbnail">
+                                <a asp-action="Details" asp-controller="ProductTShirtt" asp-route-id="@product.ID"><img class="img - fluid" src="~/images/@product.Picture" alt="" /></a>
+                            </div>
 
-                <div class="carousel-item @state">
-                    <p class="text-dark carousel-caption">Showing Page @(y+1) of @carouselPages</p>
-                    <div class="row">
-                        @for (int i = (y * recordsPerPage); i < (y * recordsPerPage) + recordsPerPage; i++)
-                        {
-                            var product = productsList.ElementAtOrDefault(i);
-                            if (product != null)
-                            {
-                                <div class="col-sm-4">
-                                    <div class="text-center">
+                            <div class="thumb-content">
+                                <p>@product.Name</p>
+                                <p class="item - price">$ @product.Price</p>
+                                <a asp-controller="ShoppingItem" asp-action="AddProductToCart" asp-route-id="@product.ID" asp-route-originC="Home" asp-route-originV="Index" class="btn btn-primary">Add to Cart</a>
+                            </div>
 
-                                        <div class="img-thumbnail">
-                                            <a asp-action="Details" asp-controller="ProductTShirtt" asp-route-id="@product.ID"><img class="img - fluid" src="../images/@product.Picture" alt="" /></a>
-                                        </div>
-
-                                        <div class="thumb-content">
-                                            <p>@product.Name</p>
-                                            <p class="item - price">$ @product.Price</p>
-                                            <a asp-controller="ShoppingItem" asp-action="AddProductToCart" asp-route-id="@product.ID" asp-route-originC="Home" asp-route-originV="Index" class="btn btn-primary">Add to Cart</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            }
-                        }
+                        </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <div class="col-sm-4 invisible">
+                    </div>
+                }
             }
         </div>
-        <!-- Carousel controls -->
-        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
+    }
 </div>

@@ -23,9 +23,14 @@ namespace MVC_Assignment1.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id=1)
         {
-            return View(await _context.ProductTShirtViewModel.ToListAsync());
+            var productList = await _context.ProductTShirtViewModel.ToListAsync();
+            var onePageProduct = productList.FindAll(p => (p.ID >= id * 9 - 8) && (p.ID <= id * 9));
+
+            ViewBag.PageId = id;
+            ViewBag.TotalPages = (productList.Count()+8)/9;
+            return View(onePageProduct);
         }
 
         public IActionResult Privacy()
