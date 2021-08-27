@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MVC_Assignment1.Data;
 using MVC_Assignment1.Models;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;

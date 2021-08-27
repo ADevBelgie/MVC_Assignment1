@@ -20,6 +20,7 @@ namespace MVC_Assignment1.Data
         public DbSet<MVC_Assignment1.Models.ShoppingItemViewModel> ShoppingItemViewModel { get; set; }
         public DbSet<MVC_Assignment1.Models.ShoppingBagViewModel> ShoppingBagViewModel { get; set; }
         public DbSet<MVC_Assignment1.Models.CostumerViewModel> CostumerViewModel { get; set; }
+        public DbSet<MVC_Assignment1.Models.LoginViewModel> LoginViewModel { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CostumerViewModel>()
@@ -37,6 +38,9 @@ namespace MVC_Assignment1.Data
             modelBuilder.Entity<ProductTShirtViewModel>()
                .HasKey(wd => new { wd.ID});
 
+            modelBuilder.Entity<LoginViewModel>()
+              .HasKey(wd => new { wd.LoginId });
+
             //modelBuilder.Entity<ShoppingcartViewModel>()
             //    .HasOne(wd => wd.product)
             //    .WithOne()
@@ -52,6 +56,11 @@ namespace MVC_Assignment1.Data
                 defaultStandards.Add(new ProductTShirtViewModel() { ID= i * 5, Name = "Plain Shirt", Price = 1999, Picture = "plain-shirt.jpg" });
             }
             modelBuilder.Entity<ProductTShirtViewModel>().HasData(defaultStandards);
+
+            IList<LoginViewModel> defaultUsers = new List<LoginViewModel>();
+            defaultUsers.Add(new LoginViewModel() { LoginId = 1, UserName = "admin1", Role = "admin", Password = "admin" });
+            defaultUsers.Add(new LoginViewModel() { LoginId = 2, UserName = "arthur", Role = "normal", Password = "arthur" });
+            modelBuilder.Entity<LoginViewModel>().HasData(defaultUsers);
         }
     }
 }

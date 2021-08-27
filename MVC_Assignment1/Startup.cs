@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MVC_Assignment1.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MVC_Assignment1
 {
@@ -29,6 +30,13 @@ namespace MVC_Assignment1
 
             services.AddDbContext<MVC_Assignment1Context>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("MVC_Assignment1")));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/account/login";
+                    options.LogoutPath = "/account/logout";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +57,7 @@ namespace MVC_Assignment1
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

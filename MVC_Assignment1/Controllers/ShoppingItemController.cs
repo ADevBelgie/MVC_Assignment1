@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVC_Assignment1.Data;
 using MVC_Assignment1.Models;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MVC_Assignment1.Controllers
 {
+    [Authorize]
     public class ShoppingItemController : Controller
     {
         private readonly MVC_Assignment1Context _context;
@@ -20,13 +21,18 @@ namespace MVC_Assignment1.Controllers
         }
 
         // GET: Shoppingcart
+        [Authorize]
         public async Task<IActionResult> Index()
         {
-            var productlist = await _context.ProductTShirtViewModel.ToListAsync();
-            var shoppingcart = await _context.ShoppingItemViewModel.ToListAsync();
-                //.Include(s => s.product.ID == productlist.Find(p => p.ID == ))
-            return View(shoppingcart);
+            //var productlist = await _context.ProductTShirtViewModel.ToListAsync();
+            //var shoppingcart = await _context.ShoppingItemViewModel.ToListAsync();
+            ////.Include(s => s.product.ID == productlist.Find(p => p.ID == ))
+            dynamic mymodel = new ExpandoObject();
+            mymodel.productlist = await _context.ProductTShirtViewModel.ToListAsync();
+            mymodel.shoppingcart = await _context.ShoppingItemViewModel.ToListAsync();
+            return View(mymodel);
         }
+        [Authorize]
         public async Task<IActionResult> AddProductToCart(int id, int selectAmount = 1, string originC = "ShoppingItem", string originV = "Index")
         {
             var shoppingcart = await _context.ShoppingItemViewModel
@@ -69,6 +75,7 @@ namespace MVC_Assignment1.Controllers
                 return RedirectToAction(originV, originC);
             }
         }
+        [Authorize]
         public async Task<IActionResult> RemoveProductToCart(int id, string originC = "ShoppingItem", string originV = "Index")
         {
             var shoppingcart = await _context.ShoppingItemViewModel
@@ -87,6 +94,7 @@ namespace MVC_Assignment1.Controllers
 
             return RedirectToAction(originV, originC);
         }
+        [Authorize]
         private bool ShoppingcartViewModelExists(int id)
         {
             return _context.ShoppingItemViewModel.Any(e => e.ID == id);

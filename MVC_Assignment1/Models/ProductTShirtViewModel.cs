@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MVC_Assignment1.Models
 {
@@ -10,7 +7,9 @@ namespace MVC_Assignment1.Models
     {
         [Key]
         public int ID { get; set; }
+        [DisplayName("Naam")]
         public string Name { get; set; }
+        [DisplayName("Prijs")]
         public double Price { get; set; }
         public string Picture { get; set; }
     }

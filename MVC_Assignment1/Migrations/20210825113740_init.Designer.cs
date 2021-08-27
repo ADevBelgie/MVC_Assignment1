@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_Assignment1.Migrations
 {
     [DbContext(typeof(MVC_Assignment1Context))]
-    [Migration("20210823124221_01_init-migration")]
-    partial class _01_initmigration
+    [Migration("20210825113740_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,53 @@ namespace MVC_Assignment1.Migrations
                     b.HasIndex("ShoppingBagId1", "ShoppingBagCostumerId");
 
                     b.ToTable("CostumerViewModel");
+                });
+
+            modelBuilder.Entity("MVC_Assignment1.Models.LoginViewModel", b =>
+                {
+                    b.Property<int>("LoginId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("RememberLogin")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ReturnUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LoginId");
+
+                    b.ToTable("LoginViewModel");
+
+                    b.HasData(
+                        new
+                        {
+                            LoginId = 1,
+                            Password = "admin",
+                            RememberLogin = false,
+                            Role = "admin",
+                            UserName = "admin1"
+                        },
+                        new
+                        {
+                            LoginId = 2,
+                            Password = "arthur",
+                            RememberLogin = false,
+                            Role = "normal",
+                            UserName = "arthur"
+                        });
                 });
 
             modelBuilder.Entity("MVC_Assignment1.Models.ProductTShirtViewModel", b =>

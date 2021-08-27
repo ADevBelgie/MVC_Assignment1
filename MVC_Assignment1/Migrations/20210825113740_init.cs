@@ -3,10 +3,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MVC_Assignment1.Migrations
 {
-    public partial class _01_initmigration : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "LoginViewModel",
+                columns: table => new
+                {
+                    LoginId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RememberLogin = table.Column<bool>(type: "bit", nullable: false),
+                    ReturnUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LoginViewModel", x => x.LoginId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "ProductTShirtViewModel",
                 columns: table => new
@@ -87,24 +104,33 @@ namespace MVC_Assignment1.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "LoginViewModel",
+                columns: new[] { "LoginId", "Password", "RememberLogin", "ReturnUrl", "Role", "UserName" },
+                values: new object[,]
+                {
+                    { 1, "admin", false, null, "admin", "admin1" },
+                    { 2, "arthur", false, null, "normal", "arthur" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "ProductTShirtViewModel",
                 columns: new[] { "ID", "Name", "Picture", "Price" },
                 values: new object[,]
                 {
-                    { 1, "Red Shirt", "red-shirt.jpg", 502.0 },
-                    { 38, "King Shirt", "king-shirt.jpg", 1999.0 },
-                    { 39, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
-                    { 40, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
-                    { 41, "Red Shirt", "red-shirt.jpg", 502.0 },
-                    { 42, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
-                    { 43, "King Shirt", "king-shirt.jpg", 1999.0 },
-                    { 44, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
-                    { 45, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
-                    { 46, "Red Shirt", "red-shirt.jpg", 502.0 },
-                    { 47, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
-                    { 48, "King Shirt", "king-shirt.jpg", 1999.0 },
-                    { 49, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
                     { 50, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
+                    { 49, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
+                    { 48, "King Shirt", "king-shirt.jpg", 1999.0 },
+                    { 47, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
+                    { 46, "Red Shirt", "red-shirt.jpg", 502.0 },
+                    { 45, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
+                    { 44, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
+                    { 43, "King Shirt", "king-shirt.jpg", 1999.0 },
+                    { 42, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
+                    { 41, "Red Shirt", "red-shirt.jpg", 502.0 },
+                    { 40, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
+                    { 39, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
+                    { 38, "King Shirt", "king-shirt.jpg", 1999.0 },
+                    { 37, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
                     { 51, "Red Shirt", "red-shirt.jpg", 502.0 },
                     { 52, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
                     { 53, "King Shirt", "king-shirt.jpg", 1999.0 },
@@ -115,7 +141,7 @@ namespace MVC_Assignment1.Migrations
                     { 65, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
                     { 64, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
                     { 63, "King Shirt", "king-shirt.jpg", 1999.0 },
-                    { 37, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
+                    { 36, "Red Shirt", "red-shirt.jpg", 502.0 },
                     { 62, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
                     { 60, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
                     { 59, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
@@ -124,15 +150,13 @@ namespace MVC_Assignment1.Migrations
                     { 56, "Red Shirt", "red-shirt.jpg", 502.0 },
                     { 55, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
                     { 61, "Red Shirt", "red-shirt.jpg", 502.0 },
-                    { 36, "Red Shirt", "red-shirt.jpg", 502.0 },
                     { 35, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
                     { 34, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
-                    { 15, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
+                    { 33, "King Shirt", "king-shirt.jpg", 1999.0 },
                     { 14, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
                     { 13, "King Shirt", "king-shirt.jpg", 1999.0 },
                     { 12, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
-                    { 11, "Red Shirt", "red-shirt.jpg", 502.0 },
-                    { 10, "Plain Shirt", "plain-shirt.jpg", 1999.0 }
+                    { 11, "Red Shirt", "red-shirt.jpg", 502.0 }
                 });
 
             migrationBuilder.InsertData(
@@ -140,33 +164,35 @@ namespace MVC_Assignment1.Migrations
                 columns: new[] { "ID", "Name", "Picture", "Price" },
                 values: new object[,]
                 {
-                    { 16, "Red Shirt", "red-shirt.jpg", 502.0 },
+                    { 10, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
                     { 9, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
-                    { 7, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
+                    { 15, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
+                    { 8, "King Shirt", "king-shirt.jpg", 1999.0 },
                     { 6, "Red Shirt", "red-shirt.jpg", 502.0 },
                     { 5, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
                     { 4, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
                     { 3, "King Shirt", "king-shirt.jpg", 1999.0 },
                     { 2, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
-                    { 8, "King Shirt", "king-shirt.jpg", 1999.0 },
+                    { 1, "Red Shirt", "red-shirt.jpg", 502.0 },
+                    { 7, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
                     { 69, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
-                    { 17, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
-                    { 19, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
-                    { 33, "King Shirt", "king-shirt.jpg", 1999.0 },
+                    { 16, "Red Shirt", "red-shirt.jpg", 502.0 },
+                    { 18, "King Shirt", "king-shirt.jpg", 1999.0 },
                     { 32, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
                     { 31, "Red Shirt", "red-shirt.jpg", 502.0 },
                     { 30, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
                     { 29, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
                     { 28, "King Shirt", "king-shirt.jpg", 1999.0 },
-                    { 18, "King Shirt", "king-shirt.jpg", 1999.0 },
                     { 27, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
-                    { 25, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
+                    { 17, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
+                    { 26, "Red Shirt", "red-shirt.jpg", 502.0 },
                     { 24, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
                     { 23, "King Shirt", "king-shirt.jpg", 1999.0 },
                     { 22, "Xmas Shirt", "christmas-shirt.jpg", 302.0 },
                     { 21, "Red Shirt", "red-shirt.jpg", 502.0 },
                     { 20, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
-                    { 26, "Red Shirt", "red-shirt.jpg", 502.0 },
+                    { 19, "Tom&Jerry Shirt", "Tom-Jerry-shirt.jpg", 1999.0 },
+                    { 25, "Plain Shirt", "plain-shirt.jpg", 1999.0 },
                     { 70, "Plain Shirt", "plain-shirt.jpg", 1999.0 }
                 });
 
@@ -190,6 +216,9 @@ namespace MVC_Assignment1.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CostumerViewModel");
+
+            migrationBuilder.DropTable(
+                name: "LoginViewModel");
 
             migrationBuilder.DropTable(
                 name: "ShoppingItemViewModel");
