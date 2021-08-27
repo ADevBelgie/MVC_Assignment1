@@ -64,10 +64,25 @@ namespace MVC_Assignment1.Controllers
             }
             return View(objLoginModel);
         }
-        //public async Task<IActionResult> Register(LoginViewModel objLoginModel)
-        //{ 
-        
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register([Bind("LoginId,UserName,Password,RememberLogin,ReturnUrl,Role")] LoginViewModel loginViewModel)
+        {
+
+            if (ModelState.IsValid)
+            {
+                loginViewModel.Role = "normal";
+                _context.Add(loginViewModel);
+                await _context.SaveChangesAsync();
+            }
+            return LocalRedirect(loginViewModel.ReturnUrl);
+        }
+        public async Task<IActionResult> Register(string ReturnUrl = "/")
+        {
+            LoginViewModel objLoginModel = new LoginViewModel();
+            objLoginModel.ReturnUrl = ReturnUrl;
+            return View(objLoginModel);
+        }
         public async Task<IActionResult> LogOut()
         {
             //SignOutAsync is Extension method for SignOut    

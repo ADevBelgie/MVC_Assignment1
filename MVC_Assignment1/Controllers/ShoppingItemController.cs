@@ -44,13 +44,13 @@ namespace MVC_Assignment1.Controllers
 
                 _context.ShoppingItemViewModel.Add(new ShoppingItemViewModel()
                 {
-                    productID = id,
+                    ProductId = id,
                     Amount = 1
                 });
             }
             else
             {
-                var productToAdd = shoppingcart.Find(p => p.productID == id);
+                var productToAdd = shoppingcart.Find(p => p.ProductId == id);
                 if (productToAdd != null)
                 {
                     productToAdd.Amount+= selectAmount;
@@ -59,7 +59,7 @@ namespace MVC_Assignment1.Controllers
                 {
                     _context.ShoppingItemViewModel.Add(new ShoppingItemViewModel()
                     {
-                        productID = id,
+                        ProductId = id,
                         Amount = selectAmount
                     }); ;
                 }
@@ -83,7 +83,7 @@ namespace MVC_Assignment1.Controllers
 
             if (shoppingcart != null)
             {
-                var productToRemove = shoppingcart.Find(p => p.productID == id);
+                var productToRemove = shoppingcart.Find(p => p.ProductId == id);
                 if (productToRemove != null)
                 {
                     _context.ShoppingItemViewModel.Remove(productToRemove);

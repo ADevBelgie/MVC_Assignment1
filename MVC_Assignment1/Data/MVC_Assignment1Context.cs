@@ -30,10 +30,14 @@ namespace MVC_Assignment1.Data
             //   .HasOne(c => c.ShoppingBag).WithOne(c => c.)
 
             modelBuilder.Entity<ShoppingBagViewModel>()
-               .HasKey(wd => new { wd.ShoppingBagId, wd.CostumerId });
+               .HasKey(wd => new { wd.ShoppingBagId, wd.LoginId });
+            modelBuilder.Entity<ShoppingBagViewModel>()
+               .HasMany(spb => spb.Items)
+               .WithOne(spi => spi.ShoppingBag)
+               .HasForeignKey(s => s.ShoppingBagId);
 
             modelBuilder.Entity<ShoppingItemViewModel>()
-               .HasKey(wd => new { wd.ID, wd.productID });
+               .HasKey(spi => new { spi.ID, spi.ProductId, spi.ShoppingBagId });
 
             modelBuilder.Entity<ProductTShirtViewModel>()
                .HasKey(wd => new { wd.ID});
